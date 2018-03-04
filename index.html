@@ -1,25 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>
-		My project
-	</title>
-	<link rel="stylesheet" href="style.css">
-
+<title></title>
 </head>
+
 <body>
-	<div id="app">
-		{{message}}
-	</div>
 
-	<div id ="app-2">
-		<span v-bind:title="message">
-			hi thie is mouse.			
-		</span>
-	</div>
+    <form id="app" @submit="checkForm" action="/something" method="post">
+      
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in errors">{{ error }}</li>
+          </ul>
+        </p>
+        
+        <p>
+        <label for="name">Name<label>
+        <input type="text" name="name" id="name" v-model="name">
+        </p>
+      
+        <p>
+        <label for="age">Age<label>
+        <input type="number" name="age" id="age" v-model="age">
+        </p>
+      
+        <p>
+        <label for="gender">Gender<label>
+        <select name="gender" id="gender" v-model="gender">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Others</option>
+        </select>
+        </p>
+      
+        <p>
+        <input type="submit" value="Submit">  
+        </p>
+      
+      </form>
 
-
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-	<script type="text/javascript" src="script_all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+            const app = new Vue({
+            el:'#app',
+            data:{
+            errors:[],
+            name:null,
+            age:null,
+            movie:null
+            },
+            methods:{
+            checkForm:function(e) {
+                if(this.name && this.age) return true;
+                this.errors = [];
+                if(!this.name) this.errors.push("Name required.");
+                if(!this.age) this.errors.push("Age required.");
+                e.preventDefault();
+            }
+            }
+        })      
+        
+    </script>
 </body>
+
 </html>
